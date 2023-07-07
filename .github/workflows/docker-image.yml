@@ -31,14 +31,14 @@ jobs:
         env:
           NEW_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          docker build -t rosagra/practica5:rosa .
+          docker build -t rosagra/practica5:$NEW_VERSION .
           docker build -t rosagra/practica5:latest .
 
       - name: Push Docker Image
         env:
           NEW_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          docker push rosagra/practica5:rosa
+          docker push rosagra/practica5:$NEW_VERSION
           docker push rosagra/practica5:latest
 
 
