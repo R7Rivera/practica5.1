@@ -42,14 +42,14 @@ jobs:
 
       - name: Generate Random Number
         id: random
-        run: echo "::set-output name=number::$(echo $RANDOM)"
+        run: echo "number=$(echo $RANDOM)" >> $GITHUB_ENV
 
       - name: Git Semantic Version
         uses: PaulHatch/semantic-version@v4.0.3
         with:
           major_pattern: "major:"
           minor_pattern: "feat:"
-          format: "${major}.${minor}.${patch}-prerelease${increment}.${{ steps.random.outputs.number }}"
+          format: "${major}.${minor}.${patch}-prerelease${increment}.${{ env.random }}"
         id: version
 
       - name: Docker Login
