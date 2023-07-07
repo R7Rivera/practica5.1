@@ -8,6 +8,7 @@ function generarId() {
   return `${timestamp}-${randomValue}`;
 }
 
+
 const server = http.createServer((req, res) => {
   if (req.url === '/preguntas' && req.method === 'GET') {
     res.setHeader('Content-Type', 'application/json');
