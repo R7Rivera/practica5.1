@@ -40,28 +40,28 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Generate Random Number
+        id: random
+        run: echo "number=$(echo $RANDOM)" >> $GITHUB_ENV
+
       - name: Git Semantic Version
         uses: PaulHatch/semantic-version@v4.0.3
         with:
           major_pattern: "major:"
           minor_pattern: "feat:"
-          format: "${major}.${minor}.${patch}-prerelease${increment}"
-        id: version
+          format: "${{ env.VERSION }}-${{ env.random }}"
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
 
       - name: Docker Login
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build Docker Image
-        env:
-          NEW_VERSION: ${{ steps.version.outputs.version }}
         run: |
           docker build -t rosagra/practica5:rosa .
           docker build -t rosagra/practica5:latest .
 
       - name: Push Docker Image
-        env:
-          NEW_VERSION: ${{ steps.version.outputs.version }}
         run: |
           docker push rosagra/practica5:rosa
           docker push rosagra/practica5:latest
-
