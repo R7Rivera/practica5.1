@@ -48,21 +48,6 @@ jobs:
           docker push rosagra/practica5:latest
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # name: Docker Image CI
 
 # on:
