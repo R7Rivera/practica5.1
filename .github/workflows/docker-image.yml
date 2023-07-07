@@ -40,12 +40,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Generate Random Number
+        id: random
+        run: echo "::set-output name=number::$(echo $RANDOM)"
+
       - name: Git Semantic Version
         uses: PaulHatch/semantic-version@v4.0.3
         with:
           major_pattern: "major:"
           minor_pattern: "feat:"
-          format: "${major}.${minor}.${patch}-prerelease${increment}"
+          format: "${major}.${minor}.${patch}-prerelease${increment}.${{ steps.random.outputs.number }}"
         id: version
 
       - name: Docker Login
@@ -64,4 +68,3 @@ jobs:
         run: |
           docker push rosagra/practica5:rosa
           docker push rosagra/practica5:latest
-
